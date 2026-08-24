@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "me.yourvisuals.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "AnimeSkyMixin",
+    "CrosshairMixin",
+    "HitAttackMixin",
+    "MinecraftAttackMixin",
+    "ViewModelMixin"
+  ],
+  "injectors": {"defaultRequire": 1}
+}
