@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "yourvisuals",
+  "version": "${version}",
+  "name": "YourVisuals",
+  "description": "Cosmetic visual client for Minecraft 1.21.1: anime sky, hit sounds, viewmodel, hat, particles, crosshair and movable HUD.",
+  "authors": ["YourVisuals"],
+  "environment": "client",
+  "entrypoints": {
+    "client": ["me.yourvisuals.client.YourVisualsClient"]
+  },
+  "mixins": [
+    {"config": "yourvisuals.client.mixins.json", "environment": "client"}
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "=1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
