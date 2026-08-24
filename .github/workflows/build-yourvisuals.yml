@@ -1,0 +1,43 @@
+name: Build YourVisuals 1.21.1
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'yourvisuals/**'
+      - '.github/workflows/build-yourvisuals.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - name: Restore project source snapshot
+        working-directory: yourvisuals
+        run: base64 -d project-text.tgz.b64 | tar -xz
+      - name: Generate visual assets
+        working-directory: yourvisuals
+        run: |
+          python -m pip install --quiet pillow
+          python generate_assets.py
+          for s in uwu nya pop; do ffmpeg -y -loglevel error -i src/client/resources/assets/yourvisuals/sounds/$s.wav -c:a libvorbis -q:a 5 src/client/resources/assets/yourvisuals/sounds/$s.ogg; rm src/client/resources/assets/yourvisuals/sounds/$s.wav; done
+      - name: Build Fabric mod
+        working-directory: yourvisuals
+        run: gradle build --stacktrace
+      - name: Upload mod jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: YourVisuals-1.21.1
+          path: |
+            yourvisuals/build/libs/yourvisuals-*.jar
+            !yourvisuals/build/libs/*-sources.jar
