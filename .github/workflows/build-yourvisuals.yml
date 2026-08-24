@@ -1,11 +1,6 @@
 name: Build YourVisuals 1.21.1
 
 on:
-  push:
-    branches: [yourvisuals-1.21.1-build]
-    paths:
-      - 'yourvisuals/**'
-      - '.github/workflows/build-yourvisuals.yml'
   pull_request:
     branches: [main]
     paths:
